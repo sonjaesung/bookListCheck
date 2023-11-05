@@ -20,7 +20,7 @@ const App = () => {
             let rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
 
             rows.map((item: any, idx: number) => {
-              if(item.__EMPTY_1 !== undefined && item.__EMPTY_1 !== '이  름') {
+              if(item.__EMPTY_1 !== undefined && item.__EMPTY_1 !== '이  름') {               
                 let bookList = item.__EMPTY_5.split('), ');
                 bookList = bookList.map((item: string) => {
                   if(item.split('').reverse()[0] !== ')') {
@@ -44,6 +44,22 @@ const App = () => {
               }
             });
         });
+        
+        const newArr = [...newBookList];
+        newArr.reduce((a, b, idx) => {
+          if(a.studentName === b.studentName) {
+            console.log(a, idx);
+            newBookList[idx-1].bookList.push(...b.bookList);
+            newBookList.splice(idx, 1);
+            return a;
+          } else {
+            return b;
+          }
+        }, {
+          studentName: '',
+          bookList: []
+        })
+        
         setExcelJson(newBookList);
     };
     reader.readAsBinaryString(input.files[0]);
@@ -58,6 +74,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    console.log(excelJson)
     excelJson.map((item: any) => {
       checkDuplication(item.bookList, item.studentName);
     })
