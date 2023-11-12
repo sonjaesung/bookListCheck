@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.js": "/bookListCheck/static/js/main.6a703dce.js",
+    "main.css": "/bookListCheck/static/css/main.087a265c.css",
+    "main.js": "/bookListCheck/static/js/main.c67c0026.js",
     "index.html": "/bookListCheck/index.html",
-    "main.6a703dce.js.map": "/bookListCheck/static/js/main.6a703dce.js.map"
+    "main.087a265c.css.map": "/bookListCheck/static/css/main.087a265c.css.map",
+    "main.c67c0026.js.map": "/bookListCheck/static/js/main.c67c0026.js.map"
   },
   "entrypoints": [
-    "static/js/main.6a703dce.js"
+    "static/css/main.087a265c.css",
+    "static/js/main.c67c0026.js"
   ]
 }
