@@ -5,7 +5,9 @@ import * as XLSX from 'xlsx';
 const App = () => {
   const [excelJson, setExcelJson] = useState<any>([]);
   const [studentList, setStudentList] = useState<any>([]);
+  const [changeWord, setChangeWord] = useState('');
   const fileInput=useRef<any>(null);
+  const wordRef = useRef<HTMLInputElement>(null);
 
   const fileLoad = (e: any) => {
     let input = e.target;
@@ -29,6 +31,14 @@ const App = () => {
                     return item;
                   }
                 });
+                if(changeWord.trim().length > 0) {
+                  bookList = bookList.map((item: string) => {
+                    return item.replaceAll('(', changeWord);
+                  });
+                  bookList = bookList.map((item: string) => {
+                    return item.split(changeWord).join(', ');
+                  });
+                } 
                 newBookList.push({studentName: item.__EMPTY_1, bookList: bookList});
                 index++;
               } else if(item.__EMPTY_1 === undefined && item.__EMPTY_5 !== undefined) {
@@ -40,6 +50,14 @@ const App = () => {
                     return item;
                   }
                 });
+                if(changeWord.trim().length > 0) {
+                  bookList = bookList.map((item: string) => {
+                    return item.replaceAll('(', changeWord);
+                  });
+                  bookList = bookList.map((item: string) => {
+                    return item.split(changeWord).join(', ');
+                  });
+                }
                 newBookList[index-1].bookList.push(...bookList);
               }
             });
@@ -82,6 +100,12 @@ const App = () => {
 
   return (
     <div className="App">
+      <input type='text' ref={wordRef}></input>
+      <button onClick={() => {
+        if(wordRef.current?.value) {
+          setChangeWord(wordRef.current?.value);
+        }
+      }}>저장</button>
       <input type='file' id={`file_upload`} ref={fileInput} onChange={(e) => {
         fileLoad(e)
       }}></input>
@@ -89,6 +113,7 @@ const App = () => {
         fileInput.current.value = "";
         setExcelJson([]);
         setStudentList([]);
+        setChangeWord('');
       }}>리셋</button>
       <div>
         <ul>
